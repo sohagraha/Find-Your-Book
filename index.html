@@ -14,21 +14,31 @@
 
 <body class="container mt-3">
     <header>
-        <div class="input-group mb-3 mx-auto w-50">
+        <h1 class="text-center m-3 fw-bold">Welcome To Our Book Database</h1>
+        <!-- input section : search by book name field  -->
+        <div class="input-group mb-3 mx-auto w-75">
             <input id="searchTxt" type="text" class="form-control" placeholder="Book Name"
                 aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button id="searchBook" class="btn btn-outline-secondary" type="button">Search</button>
+            <button id="searchBook" class="btn btn-outline-dark" type="button">Search</button>
         </div>
     </header>
 
     <body>
         <!-- How Many Books Load  -->
-        <div class="booksNumber text-center">
-            <h2 class="p-3 bg-danger w-75 mx-auto">dfgbdf</h2>
+        <div id="notify" class="booksNumber text-center text-white">
         </div>
+
+        <div id="totalCount">
+        </div>
+
         <!-- Book List  -->
         <div id="bookContainer" class="row row-cols-1 row-cols-md-3 g-4">
 
+        </div>
+        <div class="d-flex justify-content-center">
+            <div id="spiner" class="spinner-border m-5" style="width: 5rem; height: 5rem; display: none;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     </body>
 
