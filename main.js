@@ -3,7 +3,7 @@ const blank = () => {
     let span = document.createElement('span')
     span.innerHTML = `
         <h2 class="p-1 border border-warning border-3 w-50 mx-auto text-black border-1">Please Enter A Book
-        Name:(
+        Name .
         </h2>
     `
     document.getElementById('notify').appendChild(span);
@@ -20,6 +20,7 @@ document.getElementById('searchBook').addEventListener('click', function () {
 
     const inputValue = document.getElementById('searchTxt').value;
     document.getElementById('searchTxt').value = '';
+    // Condition For Spiner 
     if (inputValue === '') {
         spinner('none')
         blank();
@@ -29,7 +30,6 @@ document.getElementById('searchBook').addEventListener('click', function () {
         document.getElementById('notify').innerText = ''
         getBook(inputValue);
     }
-
 });
 
 // when search Box is not empty and fetch value//
@@ -54,7 +54,6 @@ const noBook = () => {
 // after fetching, data is process here and get the value which i want. 
 const showBook = books => {
     const bookList = books.docs;
-    console.log(books);
     let val1 = bookList.length;
     let val2 = books.numFound;
 
@@ -65,15 +64,6 @@ const showBook = books => {
     else {
         document.getElementById('notify').innerText = ''
         bookList.forEach(book => {
-            // publish year available or not condition 
-            let date;
-            if (book.first_publish_year === undefined) {
-                date = 'Unknown'
-            }
-            else {
-                date = book.first_publish_year;
-            }
-
             // image available or not condition 
             let image;
             if (book.cover_i === undefined) {
@@ -82,46 +72,35 @@ const showBook = books => {
             else {
                 image = `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
             }
-
-
-            if (books.numFound === 0) {
-                let p = document.createElement('p');
-                p.innerHTML = `
-                    <p>No </p>
-                `
-            }
             let div = document.createElement('div');
             div.classList.add('col');
-            div.innerHTML = `<div class="card h-100" onclick="bookDetail()">
-                                <img src=${image} class="h-75" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center"><span class="fw-bold">Title</span> : ${book.title}</h5>
-                                    <p class="card-text text-center"><span class="fw-bold">Authors</span> : ${book.author_name}</p>
-                                    <p class="card-text text-center"><span class="fw-bold">First Publish</span> : ${date}</p>
-                                </div>
-                            </div>`
+            div.innerHTML = `
+            <div class="card h-100 shadow-lg p-3 mb-5 bg-white rounded">
+            <img src=${image} class="img-cover" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center"><span class="fw-bold">Title</span> : ${book.title}</h5>
+                <hr>
+                <p class="card-text"><span class="fw-bold">Authors</span> : ${book.author_name ? book.author_name : ' '}</p>
+                <p class="card-text"><span class="fw-bold">First Publish (Year)</span> : ${book.first_publish_year ? book.first_publish_year : ' '}</p>
+                <p class="card-text"><span class="fw-bold">Publishers</span> : ${book.publisher ? book.publisher : ' '}</p>
+            </div>
+        </div>`
             document.getElementById('bookContainer').appendChild(div);
         });
     }
+    spinner('none')
     totalValue(val1, val2);
 }
-
 // Total Books Count Here
-totalValue = (found = 0, total = 0) => {
+const totalValue = (found = 0, total = 0) => {
     let span = document.createElement('span')
     span.innerHTML = `
-        <div class="d-flex justify-content-evenly fs-3 fw-bold bg-dark text-white mx-auto rounded-pill m-3 p-1"><span>  Books Found : ${found} </span><span>Total : ${total}</span>
-        </div>
-        `
+        <div class="d-flex justify-content-evenly fs-4 bg-dark text-white mx-auto rounded-pill m-3 p-1" ><span>  Books Found (Displayed) : ${found} </span><span>Total : ${total}</span>
+        </div >
+    `
     document.getElementById('totalCount').appendChild(span);
 }
-
 // spiner 
-spinner = (status) => {
+const spinner = (status) => {
     document.getElementById('spiner').style.display = status;
-}
-
-
-const bookDetail = () => {
-    console.log("id");
 }
